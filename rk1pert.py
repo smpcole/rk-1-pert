@@ -17,3 +17,8 @@ def rand_diag(n, dmin, dmax, normalize = False):
     if normalize:
         D /= np.trace(D)
     return D
+
+def rand_rk1_proj(n):
+    """Return a random matrix of the form uu^T, where u is a random unit vector"""
+    u = rand_unit_vector(n)
+    return np.outer(u, u)
