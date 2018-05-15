@@ -22,3 +22,7 @@ def rand_rk1_proj(n):
     """Return a random matrix of the form uu^T, where u is a random unit vector"""
     u = rand_unit_vector(n)
     return np.outer(u, u)
+
+def pencil(A0, A1):
+    """Return a funtion A(z) = A0 + z * A1"""
+    return lambda z: A0 + z * A1
