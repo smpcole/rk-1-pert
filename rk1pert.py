@@ -29,7 +29,7 @@ def pencil(A0, A1):
     """Return a funtion A(z) = A0 + z * A1"""
     return lambda z: A0 + z * A1
 
-def plot_eigs(A, tmax, tstep, filename):
+def plot_eigs(A, tmax, tstep, filename = "output.pdf"):
     """Plot the eigenvalues of the Hermitian pencil A(t) for t in [0, tmax]"""
     x = np.arange(0, tmax, tstep)
     n = A(0).shape[0]
@@ -44,12 +44,12 @@ def plot_eigs(A, tmax, tstep, filename):
     plt.ylabel(r"Eigenvalues of $A(t)$")
     plt.savefig(filename)
 
-def test_eigs(n, dmin, dmax, tmax, tstep):
+def test_eigs(n, dmin, dmax, tmax, tstep, filename = "output.pdf"):
     """Plot the eigenvalues of a randomly generated Hermitian pencil with given parameters"""
     D = rand_diag(n, dmin, dmax)
     U = rand_rk1_proj(n)
     A = pencil(D, U)
-    plot_eigs(A, tmax, tstep, "output.pdf")
+    plot_eigs(A, tmax, tstep, filename)
 
 
 
@@ -57,10 +57,13 @@ if __name__ == "__main__":
 
     try:
         n = int(sys.argv[1])
-        (dmin, dmax, tmax, tstep) = (float(a) for a in sys.argv[2:])
+        (dmin, dmax, tmax, tstep) = (float(a) for a in sys.argv[2:6])
+        filename = "output.pdf"
+        if len(sys.argv) >= 7:
+            filename = sys.argv[6]
     except(ValueError, TypeError):
         print("ERROR ERROR ERROR!!!")
         print("Usage: python rk1pert.py n dmin dmax tmax tstep")
         exit()
 
-    test_eigs(n, dmin, dmax, tmax, tstep)
+    test_eigs(n, dmin, dmax, tmax, tstep, filename)
