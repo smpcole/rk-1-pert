@@ -32,10 +32,14 @@ def pencil(A0, A1):
 def plot_eigs(A, tmax, tstep, filename):
     """Plot the eigenvalues of the Hermitian pencil A(t) for t in [0, tmax]"""
     x = np.arange(0, tmax, tstep)
-    y = {t: np.linalg.eigvalsh(A(t)) for t in x}
     n = A(0).shape[0]
+    y = tuple([] for i in range(n))
+    for t in x:
+        eigs = tuple(reversed(sorted(np.linalg.eigvalsh(A(t)))))
+        for i in range(n):
+            y[i].append(eigs[i])
     for i in range(n):
-        plt.plot(x, [y[t][i] for t in x])
+        plt.plot(x, y[i])
     plt.xlabel(r"$t$")
     plt.ylabel(r"Eigenvalues of $A(t)$")
     plt.savefig(filename)
