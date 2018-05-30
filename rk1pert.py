@@ -61,7 +61,7 @@ if __name__ == "__main__":
         filename = "output.pdf"
         if len(sys.argv) >= 7:
             filename = sys.argv[6]
-    except(ValueError, TypeError):
+    except(ValueError, TypeError, IndexError):
         print("ERROR ERROR ERROR!!!")
         print("Usage: python rk1pert.py n dmin dmax tmax tstep")
         exit()
