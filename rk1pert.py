@@ -29,8 +29,8 @@ def pencil(A0, A1):
     """Return a funtion A(z) = A0 + z * A1"""
     return lambda z: A0 + z * A1
 
-def plot_eigs(A, tmin, tmax, tstep, filename = "output.pdf"):
-    """Plot the eigenvalues of the Hermitian pencil A(t) for t in [tmin, tmax]"""
+def get_data_points(A, tmin, tmax, tstep):
+    """Get lists of x and y values for plotting"""
     x = np.arange(tmin, tmax, tstep)
     n = A(0).shape[0]
     y = tuple([] for i in range(n))
@@ -38,6 +38,11 @@ def plot_eigs(A, tmin, tmax, tstep, filename = "output.pdf"):
         eigs = tuple(reversed(sorted(np.linalg.eigvalsh(A(t)))))
         for i in range(n):
             y[i].append(eigs[i])
+    return x, y
+
+def plot_eigs(A, tmin, tmax, tstep, filename = "output.pdf"):
+    """Plot the eigenvalues of the Hermitian pencil A(t) for t in [tmin, tmax]"""
+    x, y = get_data_points(A, tmin, tmax, tstep)
     for i in range(n):
         plt.plot(x, y[i])
     plt.xlabel(r"$t$")
