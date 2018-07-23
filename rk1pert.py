@@ -29,9 +29,9 @@ def pencil(A0, A1):
     """Return a funtion A(z) = A0 + z * A1"""
     return lambda z: A0 + z * A1
 
-def plot_eigs(A, tmax, tstep, filename = "output.pdf"):
-    """Plot the eigenvalues of the Hermitian pencil A(t) for t in [0, tmax]"""
-    x = np.arange(0, tmax, tstep)
+def plot_eigs(A, tmin, tmax, tstep, filename = "output.pdf"):
+    """Plot the eigenvalues of the Hermitian pencil A(t) for t in [tmin, tmax]"""
+    x = np.arange(tmin, tmax, tstep)
     n = A(0).shape[0]
     y = tuple([] for i in range(n))
     for t in x:
@@ -49,7 +49,7 @@ def test_eigs(n, dmin, dmax, tmax, tstep, filename = "output.pdf"):
     D = rand_diag(n, dmin, dmax)
     U = rand_rk1_proj(n)
     A = pencil(D, U)
-    plot_eigs(A, tmax, tstep, filename)
+    plot_eigs(A, 0, tmax, tstep, filename)
 
 
 
