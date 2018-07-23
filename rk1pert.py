@@ -47,7 +47,10 @@ def plot_eigs(A, tmin, tmax, tstep, filename = "output.pdf"):
 def test_eigs(n, dmin, dmax, tmax, tstep, filename = "output.pdf"):
     """Plot the eigenvalues of a randomly generated Hermitian pencil with given parameters"""
     D = rand_diag(n, dmin, dmax)
-    U = rand_rk1_proj(n)
+    u = rand_unit_vector(n)
+    U = np.outer(u, u)
+    print("u = " + str(u))
+    print("D = " + str(np.diag(D)))
     A = pencil(D, U)
     plot_eigs(A, 0, tmax, tstep, filename)
 
